@@ -5,3 +5,5 @@
 *.toc
 *.log
 *.dvi
+*.vrb
+.DS_Store

@@ -1,6 +1,7 @@
 \documentclass{beamer}
 \usepackage{listings}
 \usepackage{color}
+\usepackage{graphics}
 
 \lstset{
   language=Ruby
@@ -31,9 +32,9 @@
   \frametitle{Motivation}
   \begin{itemize}
   \item Power of Erland
-  \item Syntax
+  \item Elixir basics
   \item Macros
-  \item Tooling and Abstractions
+  \item Tooling and abstractions
   \end{itemize}
 \end{frame}
 
@@ -61,7 +62,20 @@
   \end{itemize}
 \end{frame}
 
-\section[Section]{Syntax}
+\begin{frame}
+  \frametitle{How do they do it?}
+  \includegraphics[scale=.5]{beam.png}
+\end{frame}
+
+\section[Section]{Elixir basics}
+
+\begin{frame}
+  \frametitle{Syntax}
+  ``Elixir syntax is like a marriage of DSL
+  friendly Ruby and the powerful hygenic macros of Clojure.``
+  \linebreak
+  \textrm{-- Devin Torres}
+\end{frame}
 
 \begin{frame}[fragile]
   \frametitle{The basics you know}
@@ -77,16 +91,53 @@
   \end{lstlisting}
 \end{frame}
 
-\begin{frame}
-  \frametitle{Syntax}
-  ``Elixir syntax is like a marriage of DSL
-  friendly Ruby and the powerful hygenic macros of Clojure.``
-  \linebreak
-  \textrm{-- Devin Torres}
+\begin{frame}[fragile]
+  \frametitle{Modules and function, oh my!}
+  \begin{lstlisting}
+    defmodule Geometry do
+      def rectangle_area(a, b) do
+        a * b
+      end
+    end
+  \end{lstlisting}
 \end{frame}
 
-\begin{frame}
-  \frametitle{Strings}
+\begin{frame}[fragile]
+  \frametitle{Composing functions}
+  \begin{lstlisting}
+    def process_xml(model, xml) do
+      model
+      |> update(xml)
+      |> process_changes
+      |> persist
+    end
+  \end{lstlisting}
+\end{frame}
+
+\begin{frame}[fragile]
+  \frametitle{Function arity}
+  \begin{lstlisting}
+    defmodule Rectangle do
+      def area(a), do: area(a, a)
+      def area(a, b), do: a * b
+    end
+  \end{lstlisting}
+\end{frame}
+
+\begin{frame}[fragile]
+  \frametitle{Typespec}
+  \begin{lstlisting}
+    % read up on dializer and custom types
+    defmodule Circle do
+      @pi 3.14159
+
+      @spec area(number) :: number
+      def area(r), do: r*r*@pi
+        
+      @spec circumference(number) :: number
+      def circumference(r), do: 2*r*@pi
+    end
+  \end{lstlisting}
 \end{frame}
 
 \section[Section]{Macros}
