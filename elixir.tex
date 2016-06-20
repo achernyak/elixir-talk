@@ -1,11 +1,14 @@
 \documentclass{beamer}
 \usepackage{listings}
-\usepackage{color}
-\usepackage{graphics}
+\usepackage{xcolor}
+\usepackage{graphicx}
+\usepackage[table]{xcolor}
 
 \lstset{
   language=Ruby
 }
+
+\renewcommand{\arraystretch}{1.5}
 
 \begin{document}
 \title{Welcome to Elixir}
@@ -31,14 +34,14 @@
 \begin{frame}
   \frametitle{Motivation}
   \begin{itemize}
-  \item Power of Erland
+  \item Power of Erlang
   \item Elixir basics
   \item Macros
   \item Tooling and abstractions
   \end{itemize}
 \end{frame}
 
-\section[Section]{Power of Erland}
+\section[Section]{Power of Erlang}
 
 \begin{frame}
   \frametitle{Erlang}
@@ -64,7 +67,52 @@
 
 \begin{frame}
   \frametitle{How do they do it?}
-  \includegraphics[scale=.5]{beam.png}
+  \begin{center}
+    \includegraphics[scale=.5]{beam.png}
+  \end{center}
+\end{frame}
+
+\begin{frame}
+  \frametitle{OTP}
+  \begin{center}
+    \includegraphics[scale=.5]{otp.png}
+  \end{center}
+\end{frame}
+
+\begin{frame}
+  \frametitle{A modern system}
+  \begin{center}
+    \begin{tabular}{c|c}
+      \hline
+      Technical requirements & Server \\ \hline
+      HTTP server & Nginx and Phusion Passenger \\
+      Request processing & Ruby on Rails \\
+      Long-running requests & Go \\
+      Server-wide state & Redis \\
+      Persistable data & Redis and MongoDB \\
+      Background jobs & Cron, Bash scripts, and Ruby \\
+      Service crash recovery & Upstart \\
+      \hline
+    \end{tabular}
+  \end{center}
+\end{frame}
+
+\begin{frame}
+  \frametitle{OTP capabilities}
+  \begin{center}
+    \begin{tabular}{c|c}
+      \hline
+      Technical requirements & Server \\ \hline
+      HTTP server & Erlang \\
+      Request processing & Erlang \\
+      Long-running requests & Erlang \\
+      Server-wide state & Erlang \\
+      Persistable data & Erlang \\
+      Background jobs & Erlang \\
+      Service crash recovery & Erlang \\
+      \hline
+    \end{tabular}
+  \end{center}
 \end{frame}
 
 \section[Section]{Elixir basics}
@@ -125,6 +173,23 @@
 \end{frame}
 
 \begin{frame}[fragile]
+  \frametitle{Destructuring}
+  \begin{lstlisting}
+    def do_something({:ok, value}) do
+      # use the value here
+    end
+
+    def do_something({:warning, value}) do
+      # warn user before proceeding
+    end
+
+    def do_something({:error, message}) do
+      # produce a nice error message to the user
+    end
+  \end{lstlisting}
+\end{frame}
+
+\begin{frame}[fragile]
   \frametitle{Typespec}
   \begin{lstlisting}
     % read up on dializer and custom types
@@ -132,15 +197,25 @@
       @pi 3.14159
 
       @spec area(number) :: number
-      def area(r), do: r*r*@pi
+      def area(r), do: r * r * @pi
         
       @spec circumference(number) :: number
-      def circumference(r), do: 2*r*@pi
+      def circumference(r), do: 2 * r * @pi
     end
   \end{lstlisting}
 \end{frame}
 
 \section[Section]{Macros}
+
+\begin{frame}
+  \frametitle{Macros}
+  \begin{itemize}
+  \item code transformation at compile time
+  \item code that can change semantics of the input
+  \item a lot of elixir functionality is implemented in macros \textsl{e.g. def, unless}
+  \item should be used sparingly
+  \end{itemize}
+\end{frame}
 
 \section[Section]{Tooling and Abstractions}
   
