@@ -73,7 +73,7 @@
 \end{frame}
 
 \begin{frame}
-  \frametitle{OTP}
+  \frametitle{Server side systems}
   \begin{center}
     \includegraphics[scale=.5]{otp.png}
   \end{center}
@@ -87,7 +87,7 @@
       Technical requirements & Server \\ \hline
       HTTP server & Nginx and Phusion Passenger \\
       Request processing & Ruby on Rails \\
-      Long-running requests & Go \\
+      Long-running requests & Java and Go \\
       Server-wide state & Redis \\
       Persistable data & Redis and MongoDB \\
       Background jobs & Cron, Bash scripts, and Ruby \\
@@ -98,7 +98,7 @@
 \end{frame}
 
 \begin{frame}
-  \frametitle{OTP capabilities}
+  \frametitle{OTP}
   \begin{center}
     \begin{tabular}{c|c}
       \hline
@@ -192,7 +192,6 @@
 \begin{frame}[fragile]
   \frametitle{Typespec}
   \begin{lstlisting}
-    % read up on dializer and custom types
     defmodule Circle do
       @pi 3.14159
 
@@ -215,6 +214,73 @@
   \item a lot of elixir functionality is implemented in macros \textsl{e.g. def, unless}
   \item should be used sparingly
   \end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]
+  \frametitle{Macro expension}
+  \begin{columns}
+    \column {.5\textwidth}
+    \begin{lstlisting}
+      unless some_exp do
+        block_1
+      else
+        block_2
+      end
+    \end{lstlisting}
+    \column {.5\textwidth}
+    \begin{lstlisting}
+      if some_exp do
+        block_2
+      else
+        block_1
+      end
+    \end{lstlisting}
+  \end{columns}
+\end{frame}
+
+\begin{frame}[fragile]
+  \frametitle{Quoting}
+  \begin{lstlisting}
+    quote do: sum [1, 2, 3]
+    # => { :sum, [], [1, 2, 3] }
+
+    quote do: 1 + 1
+    # => { :+,
+    #      [context: Elixir, import: Kernal],
+    #      [1, 1] }
+  \end{lstlisting}
+\end{frame}
+
+\begin{frame}[fragile]
+  \frametitle{Simple macro}
+  \begin{lstlisting}
+    defmacro match?(left, right) do
+      quote do
+        case unquote(right) do
+          unquote(left) ->
+            true
+          _ ->
+            false
+        end
+      end
+    end
+  \end{lstlisting}
+\end{frame}
+
+\begin{frame}[fragile]
+  \frametitle{Usine our new macro!}
+  \begin{lstlisting}
+    list = [{:a,1},{:b,2},{:a,3}]
+    # => [a: 1, b: 2, a: 3]
+
+    Enum.filter list, fn (thing) do
+      match?({:a, _}, thing)
+    end
+    # => [a: 1, a: 3]
+
+    Enum.filter list, match?({:a, _}, &1)
+    # => [a: 1, a: 3]
+  \end{lstlisting}
 \end{frame}
 
 \section[Section]{Tooling and Abstractions}
