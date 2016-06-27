@@ -7,3 +7,5 @@
 *.dvi
 *.vrb
 .DS_Store
+*.bbl
+*.blg

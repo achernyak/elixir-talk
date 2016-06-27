@@ -1,8 +1,20 @@
 \documentclass{beamer}
+\usetheme[%
+ titleformat=allcaps,%
+ block=fill,%
+ % background=dark,%
+ progressbar=foot,%
+ subsectionpage=progressbar,%
+ numbering=none%
+]{Metropolis}
+\setbeamertemplate{%
+ navigation symbols%
+}{} % suppresses all navigation symbols
 \usepackage{listings}
 \usepackage{xcolor}
 \usepackage{graphicx}
-\usepackage[table]{xcolor}
+\definecolor{elixir}{RGB}{60,31,78}
+\setbeamercolor{normal text}{fg=elixir, bg=white}
 
 \lstset{
   language=Ruby
@@ -11,15 +23,9 @@
 \renewcommand{\arraystretch}{1.5}
 
 \begin{document}
-\title{Welcome to Elixir}
-\subtitle{
-  \textit{
-    \linebreak
-    ``This is good shit``
-    \linebreak
-  }
-  \tiny{\textrm{--- Joe Armstrong}}
-}
+\title{A Sip of Elixir}
+\author{Artem Chernyak}
+
 \frame{\titlepage}
 
 \AtBeginSection[]{
@@ -37,7 +43,7 @@
   \item Power of Erlang
   \item Elixir basics
   \item Macros
-  \item Tooling and abstractions
+  \item Tooling
   \end{itemize}
 \end{frame}
 
@@ -119,10 +125,11 @@
 
 \begin{frame}
   \frametitle{Syntax}
-  ``Elixir syntax is like a marriage of DSL
-  friendly Ruby and the powerful hygenic macros of Clojure.``
-  \linebreak
-  \textrm{-- Devin Torres}
+  \begin{quote}
+  Elixir syntax is like a marriage of DSL
+  friendly Ruby and the powerful hygenic macros of Clojure.
+  \end{quote}
+  \emph{-- Devin Torres}
 \end{frame}
 
 \begin{frame}[fragile]
@@ -208,6 +215,16 @@
 
 \begin{frame}
   \frametitle{Macros}
+  \begin{quote}
+    Lisp traditionally empowered developers because you can eliminate anything
+    that's tedious through macros, and that power is really what people
+    keep going back for.
+  \end{quote}
+  \emph{-- Rich Hickey}
+\end{frame}
+
+\begin{frame}
+  \frametitle{Macros}
   \begin{itemize}
   \item code transformation at compile time
   \item code that can change semantics of the input
@@ -283,6 +300,94 @@
   \end{lstlisting}
 \end{frame}
 
-\section[Section]{Tooling and Abstractions}
-  
+\section[Section]{Tooling}
+
+\begin{frame}
+  \frametitle{IEx}
+  \begin{itemize}
+  \item full REPL
+  \item easy to load and interact
+  \item full coloring support
+  \item easy extensible with user defined helpers
+  \end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]
+  \frametitle{doctest}
+  \begin{verbatim}
+    @doc """
+    Check if the given argument is nil or not.
+    Allowed in guard clauses.
+
+    ## Examples
+
+      iex> nil?(1)
+      false
+      iex> nil?(nil)
+      true
+    """
+  \end{verbatim}
+\end{frame}
+
+
+\begin{frame}
+  \frametitle{Mix}
+  \begin{itemize}
+  \item Great build and deploy tool
+  \item Based around Mix.Tasks
+    \begin{itemize}
+    \item Simply define run/1
+    \item Easy documentation
+    \item Access to 15 helper methods
+    \end{itemize}
+  \item Great documentation
+  \end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]
+  \frametitle{Mix tasks}
+  \footnotesize{
+\begin{verbatim}
+    mix clean           # Clean generated application files
+    mix compile         # Compile source files
+    mix deps            # List dependencies and their status
+    mix deps.clean      # Remove dependencies files
+    mix deps.compile    # Compile dependencies
+    mix deps.get        # Get all out of date dependencies
+    mix deps.unlock     # Unlock the given dependencies
+    mix deps.update     # Update dependencies
+    mix do              # Executes the commands separated by comma
+    mix escriptize      # Generates an escript for the project
+    mix help            # Print help information for tasks
+    mix local           # List local tasks
+    mix local.install   # Install a task locally
+    mix local.rebar     # Install rebar locally
+    mix local.uninstall # Uninstall local tasks
+    mix new             # Creates a new Elixir project
+    mix run             # Run the given expression
+    mix test            # Run a project's tests
+\end{verbatim}
+  }
+\end{frame}
+
+\begin{frame}
+  \frametitle{Hex}
+  \begin{itemize}
+  \item Easy to use package manager
+  \item Searchable
+  \item Manages dependencies
+  \item Almost 2300 packages available
+  \end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]
+  \frametitle{Iteroperability with Erlang}
+  \begin{lstlisting}
+    # Elixir map function
+    Enum.map
+
+    # Erlang map function
+    :list.map
+  \end{lstlisting}
+\end{frame}
 \end{document}
